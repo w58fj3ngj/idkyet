@@ -60,7 +60,7 @@ header{position:sticky;top:0;z-index:60;backdrop-filter:saturate(140%) blur(8px)
 .info{padding:14px 16px}
 .h1{font-size:20px;font-weight:700;margin:2px 0 6px}
 .icon-row{display:flex;gap:8px}
-.icon-btn{display:flex;align-items:center;justify-content:center;gap:4px;height:40px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1320,#0d1119);cursor:pointer;color:var(--text);font-size:13px;line-height:1}
+.icon-btn{display:flex;align-items:center;justify-content:center;gap:4px;height:40px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1320,#0d1119);cursor:pointer;color:var(--text);font-size:13px;line-height:1;padding:0 12px}
 .icon-btn:hover{border-color:#2a3246}
 .material-icons{font-size:20px;line-height:1}
 .desc{margin-top:14px;color:#c7d0e0}
@@ -136,12 +136,12 @@ const GAMES=[
   {id:"monkeymart",name:"Monkey Mart",status:"",tags:["Simulation","Idle","Casual"],desc:"Monkey Mart is a casual management game where you play as a monkey running a supermarket.",thumb:"images/monkeymart.png",url:"games/monkeymart/index.html"},
   {id:"crazycattle3d",name:"Crazy Cattle 3D",status:"",tags:["Arcade","Action","3D"],desc:"Crazy Cattle 3D is an action-packed 3D game where you drive a cow to eliminate other cows and clear each level.",thumb:"images/crazycattle3d.png",url:"games/crazycattle3d/index.html"},
   {id:"penaltykick",name:"Penalty Kick",status:"",tags:["Sports","Skill","Arcade"],desc:"Penalty Kicks is a casual soccer game focused on taking and saving penalty shots. Aim carefully to score goals while trying to predict and stop the opponent’s shots.",thumb:"images/penaltykicks.png",url:"games/penaltykicks/index.html"},
-    {id:"drifthunters",name:"Drift Hunters",status:"",tags:["","",""],desc:"",thumb:"images/drifthunters.png",url:"games/drifthunters/index.html"},
-	  {id:"cookieclicker",name:"Cookie Clicker",status:"",tags:["","",""],desc:"",thumb:"images/cookieclicker.png",url:"games/cookieclicker/index.html"},
-	  {id:"minecraft1.12",name:"Minecraft 1.12",status:"",tags:["","",""],desc:"",thumb:"images/minecraft1.12.png",url:"games/minecraft1.12/index.html"},
-	  {id:"johnnyupgrade",name:"Johnny Upgrade",status:"",tags:["","",""],desc:"",thumb:"images/johnnyupgrade.png",url:"games/johnnyupgrade/index.html"},
-	  {id:"3dbowling",name:"3D Bowling",status:"",tags:["","",""],desc:"",thumb:"images/3dbowling.png",url:"games/3dbowling/index.html"},
-	  {id:"awesometanks2",name:"Awesome Tanks 2",status:"",tags:["","",""],desc:"",thumb:"images/awesometanks2.png",url:"games/awesometanks2/index.html"},
+  {id:"drifthunters",name:"Drift Hunters",status:"",tags:["","",""],desc:"",thumb:"images/drifthunters.png",url:"games/drifthunters/index.html"},
+  {id:"cookieclicker",name:"Cookie Clicker",status:"",tags:["","",""],desc:"",thumb:"images/cookieclicker.png",url:"games/cookieclicker/index.html"},
+  {id:"minecraft1.12",name:"Minecraft 1.12",status:"",tags:["","",""],desc:"",thumb:"images/minecraft1.12.png",url:"games/minecraft1.12/index.html"},
+  {id:"johnnyupgrade",name:"Johnny Upgrade",status:"",tags:["","",""],desc:"",thumb:"images/johnnyupgrade.png",url:"games/johnnyupgrade/index.html"},
+  {id:"3dbowling",name:"3D Bowling",status:"",tags:["","",""],desc:"",thumb:"images/3dbowling.png",url:"games/3dbowling/index.html"},
+  {id:"awesometanks2",name:"Awesome Tanks 2",status:"",tags:["","",""],desc:"",thumb:"images/awesometanks2.png",url:"games/awesometanks2/index.html"},
   {id:"1v1lol",name:"1v1.LOL",status:"",tags:["Shooter","Multiplayer","Strategy"],desc:"1v1.LOL is a fast-paced online multiplayer game where players face off in one-on-one battles.",thumb:"images/1v1lol.png",url:"games/1v1lol/index.html"}
 ]
 const $=s=>document.querySelector(s)
@@ -223,7 +223,7 @@ function renderDetail(id){
   const thumbImg=g.thumb?`<img src="${escapeHTML(g.thumb)}" alt="${escapeHTML(g.name)}">`:`<div style="width:140px;height:78px;background:linear-gradient(90deg,#0f1724,#0b1220);border-radius:8px"></div>`
   $('#player').innerHTML=`
     ${bgHtml}
-    <iframe id="gameFrame" src="" allow="autoplay; fullscreen" style="position:relative;z-index:5;width:100%;height:100%;border:0;display:none"></iframe>
+    <iframe id="gameFrame" src="" allow="autoplay; fullscreen" allowfullscreen style="position:relative;z-index:5;width:100%;height:100%;border:0;display:none"></iframe>
     <div class="loading-overlay" id="loadingOverlay" style="display:flex">
       <div class="loading-card" id="loadingCard">
         <div class="loading-thumb">${thumbImg}</div>
@@ -234,8 +234,6 @@ function renderDetail(id){
         </div>
       </div>
     </div>
-}
-
   `
   $('#d-title').textContent=g.name
   $('#d-tags').innerHTML=g.tags.map(t=>escapeHTML(t)).join('<span class="sep"> • </span>')
@@ -258,6 +256,24 @@ function renderDetail(id){
   const ph2=$('#placeholder2')
   if(ph1) ph1.onclick=()=>{alert('Placeholder 1')}
   if(ph2) ph2.onclick=()=>{alert('Placeholder 2')}
+
+  const fsBtn = document.getElementById('fullscreenBtn')
+  if(fsBtn){
+    fsBtn.onclick = async ()=>{
+      const player = document.getElementById('player')
+      try{
+        if(!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement){
+          if(player.requestFullscreen) await player.requestFullscreen()
+          else if(player.webkitRequestFullscreen) player.webkitRequestFullscreen()
+          else if(player.msRequestFullscreen) player.msRequestFullscreen()
+        }else{
+          if(document.exitFullscreen) await document.exitFullscreen()
+          else if(document.webkitExitFullscreen) document.webkitExitFullscreen()
+          else if(document.msExitFullscreen) document.msExitFullscreen()
+        }
+      }catch(e){}
+    }
+  }
 }
 function recommend(game,k=6){
   const set=new Set(game.tags.map(t=>t.toLowerCase()))
@@ -319,6 +335,7 @@ function startLoadingAndPlay(game){
   }
   frame.addEventListener('load',onLoad)
   frame.addEventListener('error',onError)
+  frame.setAttribute('allowfullscreen','')
   if(game.url&&game.url!=='about:blank'){
     frame.src=game.url
   }else{
