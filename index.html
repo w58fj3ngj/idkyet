@@ -60,7 +60,7 @@ header{position:sticky;top:0;z-index:60;backdrop-filter:saturate(140%) blur(8px)
 .info{padding:14px 16px}
 .h1{font-size:20px;font-weight:700;margin:2px 0 6px}
 .icon-row{display:flex;gap:8px}
-.icon-btn{display:flex;align-items:center;justify-content:center;gap:4px;width:100px;height:40px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1320,#0d1119);cursor:pointer;color:var(--text);font-size:13px;line-height:1}
+.icon-btn{display:flex;align-items:center;justify-content:center;gap:4px;height:40px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1320,#0d1119);cursor:pointer;color:var(--text);font-size:13px;line-height:1}
 .icon-btn:hover{border-color:#2a3246}
 .material-icons{font-size:20px;line-height:1}
 .desc{margin-top:14px;color:#c7d0e0}
@@ -106,8 +106,8 @@ footer{position:fixed;left:0;right:0;bottom:0;height:var(--footer-h);display:fle
           <div class="btnrow" style="margin-bottom:8px">
             <div class="icon-row">
               <button id="fullscreenBtn" class="icon-btn" aria-label="Fullscreen"><span class="material-icons">fullscreen</span>Fullscreen</button>
-              <button id="placeholder1" class="icon-btn" aria-label="Placeholder 1"><span class="material-icons">share</span>placeholder</button>
-              <button id="placeholder2" class="icon-btn" aria-label="Placeholder 2"><span class="material-icons">more_vert</span>More</button>
+              <button id="placeholder1" class="icon-btn" aria-label="Placeholder 1"><span class="material-icons">question_mark</span>placeholder</button>
+              <button id="placeholder2" class="icon-btn" aria-label="Placeholder 2"><span class="material-icons">question_mark</span>placeholder</button>
             </div>
           </div>
           <div id="d-tags"></div>
@@ -131,11 +131,18 @@ footer{position:fixed;left:0;right:0;bottom:0;height:var(--footer-h);display:fle
 </footer>
 <script>
 const GAMES=[
-  {id:"slope",name:"Slope",status:"",tags:["Arcade","Runner","3D"],desc:"Slope is a fast-paced 3D endless runner game where you control a ball rolling down a steep, neon-colored slope. The ball speeds up as you progress, and your goal is to survive as long as possible while avoiding obstacles, sharp turns, and gaps.",thumb:"images/slope.png",url:"games/slope/index.html",video:"videos/slope.mp4"},
-  {id:"supermario64",name:"Super Mario 64",status:"",tags:["Platformer","Adventure","3D"],desc:"Super Mario 64 is a classic 3D platform game where Mario explores Peach’s castle and various themed worlds to collect Power Stars.",thumb:"images/supermario64.png",url:"games/supermario64/index.html",video:""},
-  {id:"monkeymart",name:"Monkey Mart",status:"",tags:["Simulation","Idle","Casual"],desc:"Monkey Mart is a casual management game where you play as a monkey running a supermarket.",thumb:"images/monkeymart.png",url:"games/monkeymart/index.html",video:""},
-  {id:"crazycattle3d",name:"Crazy Cattle 3D",status:"",tags:["Arcade","Action","3D"],desc:"Crazy Cattle 3D is an action-packed 3D game where you drive a cow to eliminate other cows and clear each level.",thumb:"images/crazycattle3d.png",url:"games/crazycattle3d/index.html",video:""},
-  {id:"1v1lol",name:"1v1.LOL",status:"",tags:["Shooter","Multiplayer","Strategy"],desc:"1v1.LOL is a fast-paced online multiplayer game where players face off in one-on-one battles.",thumb:"images/1v1lol.png",url:"games/1v1lol/index.html",video:""}
+  {id:"slope",name:"Slope",status:"",tags:["Arcade","Runner","3D"],desc:"Slope is a fast-paced 3D endless runner game where you control a ball rolling down a steep, neon-colored slope. The ball speeds up as you progress, and your goal is to survive as long as possible while avoiding obstacles, sharp turns, and gaps.",thumb:"images/slope.png",url:"games/slope/index.html"},
+  {id:"supermario64",name:"Super Mario 64",status:"",tags:["Platformer","Adventure","3D"],desc:"Super Mario 64 is a classic 3D platform game where Mario explores Peach’s castle and various themed worlds to collect Power Stars.",thumb:"images/supermario64.png",url:"games/supermario64/index.html"},
+  {id:"monkeymart",name:"Monkey Mart",status:"",tags:["Simulation","Idle","Casual"],desc:"Monkey Mart is a casual management game where you play as a monkey running a supermarket.",thumb:"images/monkeymart.png",url:"games/monkeymart/index.html"},
+  {id:"crazycattle3d",name:"Crazy Cattle 3D",status:"",tags:["Arcade","Action","3D"],desc:"Crazy Cattle 3D is an action-packed 3D game where you drive a cow to eliminate other cows and clear each level.",thumb:"images/crazycattle3d.png",url:"games/crazycattle3d/index.html"},
+  {id:"penaltykick",name:"Penalty Kick",status:"",tags:["Sports","Skill","Arcade"],desc:"Penalty Kicks is a casual soccer game focused on taking and saving penalty shots. Aim carefully to score goals while trying to predict and stop the opponent’s shots.",thumb:"images/penaltykicks.png",url:"games/penaltykicks/index.html"},
+    {id:"drifthunters",name:"Drift Hunters",status:"",tags:["","",""],desc:"",thumb:"images/drifthunters.png",url:"games/drifthunters/index.html"},
+	  {id:"cookieclicker",name:"Cookie Clicker",status:"",tags:["","",""],desc:"",thumb:"images/cookieclicker.png",url:"games/cookieclicker/index.html"},
+	  {id:"minecraft1.12",name:"Minecraft 1.12",status:"",tags:["","",""],desc:"",thumb:"images/minecraft1.12.png",url:"games/minecraft1.12/index.html"},
+	  {id:"johnnyupgrade",name:"Johnny Upgrade",status:"",tags:["","",""],desc:"",thumb:"images/johnnyupgrade.png",url:"games/johnnyupgrade/index.html"},
+	  {id:"3dbowling",name:"3D Bowling",status:"",tags:["","",""],desc:"",thumb:"images3dbowling.png",url:"games/3dbowling/index.html"},
+	  {id:"awesometanks2",name:"Awesome Tanks 2",status:"",tags:["","",""],desc:"",thumb:"images/awesometanks2.png",url:"games/awesometanks2/index.html"},
+  {id:"1v1lol",name:"1v1.LOL",status:"",tags:["Shooter","Multiplayer","Strategy"],desc:"1v1.LOL is a fast-paced online multiplayer game where players face off in one-on-one battles.",thumb:"images/1v1lol.png",url:"games/1v1lol/index.html"}
 ]
 const $=s=>document.querySelector(s)
 function setView(detail=false){
