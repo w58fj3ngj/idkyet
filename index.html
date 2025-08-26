@@ -19,7 +19,7 @@
       --new:#22c55e;
       --popular:#f59e0b;
       --danger:#ef4444;
-      --radius:18px;
+      --radius:10px;
       --gap:16px;
       --shadow:0 1px 0 rgba(255,255,255,0.03) inset, 0 8px 30px rgba(0,0,0,0.35);
     }
@@ -153,7 +153,7 @@
     .progress-wrap{height:8px; background:rgba(255,255,255,.04); border-radius:999px; overflow:hidden}
     .progress{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--accent), #4f7bff)}
     .info{padding:14px 16px}
-    .h1{font-size:22px; font-weight:800; margin:2px 0 6px}
+    .h1{font-size:22px; font-weight:700; margin:2px 0 6px}
     .sub{color:var(--muted); font-size:13px}
     .btnrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px}
     .btn{
@@ -162,7 +162,7 @@
       font-weight:600; cursor:pointer; transition:transform .12s ease, border-color .2s;
     }
     .btn:hover{transform:translateY(-1px); border-color:#2b3448}
-    .icon-row{display:flex; gap:8px; margin-left:6px}
+    .icon-row{display:flex; gap:8px; margin-left:3px}
     .icon-btn{
       display:inline-grid; place-items:center; width:40px; height:40px; border-radius:10px; border:1px solid var(--border);
       background:linear-gradient(180deg,#0f1320,#0d1119); cursor:pointer; color:var(--text);
@@ -171,6 +171,8 @@
     .icon-btn:hover{transform:translateY(-2px); border-color:#2b3448}
     .material-icons{font-size:20px; line-height:1}
     .desc{margin-top:14px; color:#c7d0e0}
+    #d-tags{color:var(--muted); font-size:13px; margin-top:3px}
+    #d-tags .sep{margin:0 1px; color:var(--muted)}
     .side{display:flex; flex-direction:column; gap:12px}
     .rec{display:flex; gap:10px; padding:10px; border:1px solid var(--border); border-radius:12px; background:linear-gradient(180deg,#0e1219,#0c1016); cursor:pointer; transition:transform .12s ease, border-color .2s ease}
     .rec:hover{transform:translateY(-1px); border-color:#2a3246}
@@ -233,6 +235,7 @@
           <div class="player" id="player"></div>
           <div class="info">
             <div class="h1" id="d-title"></div>
+			<div id="d-tags" style="margin-top:5px"></div>
             <div class="btnrow">
               <div class="icon-row">
                 <button class="icon-btn" id="fullscreenBtn" aria-label="Fullscreen"><span class="material-icons">fullscreen</span></button>
@@ -240,7 +243,6 @@
                 <button class="icon-btn" id="placeholder2" aria-label="Placeholder 2"><span class="material-icons">more_vert</span></button>
               </div>
             </div>
-            <div class="tags" id="d-tags" style="margin-top:10px"></div>
             <div class="desc" id="d-desc"></div>
           </div>
         </div>
@@ -278,29 +280,29 @@
       name:"Monkey Mart",
       status:"",
       tags:["Simulation","Idle","Casual"],
-      desc:"Monkey Mart is a casual management game where you play as a monkey running a supermarket. You plant crops, harvest food, stock shelves, and serve customers while expanding your store. As you progress, you can unlock new products, upgrade equipment, and hire helpers to keep the mart running smoothly.",
+      desc:"Monkey Mart is a casual management game where you play as a monkey running a supermarket. You plant crops, harvest food, stock shelves, and serve customers while expanding your store.",
       thumb:"images/monkeymart.png",
       url:"games/monkeymart/index.html",
       video:""
     },
     {
-      id:"pixel-fighter",
-      name:"Pixel Fighter",
+      id:"crazycattle3d",
+      name:"Crazy Cattle 3D",
       status:"",
-      tags:["Action","Fighting","Local"],
-      desc:"Tight hitstop combat with rollback-ready netcode placeholder.",
-      thumb:"images/pixel.png",
-      url:"about:blank",
+      tags:["Arcade","Action","3D"],
+      desc:"Crazy Cattle 3D is an action-packed 3D game where you drive a cow to eliminate other cows and clear each level. You can progress through increasingly challenging stages, using strategy and skill to dominate the herd.",
+      thumb:"images/crazycattle3d.png",
+      url:"games/crazycattle3d/index.html",
       video:""
     },
     {
-      id:"island-puzzler",
-      name:"Island Puzzler",
+      id:"1v1lol",
+      name:"1v1.LOL",
       status:"",
-      tags:["Puzzle","Cozy","Chill"],
-      desc:"Slide islands to connect rivers and discover secrets.",
-      thumb:"images/island.png",
-      url:"about:blank",
+      tags:["Shooter","Multiplayer","Strategy"],
+      desc:"1v1.LOL is a fast-paced online multiplayer game where players face off in one-on-one battles. You can build structures, gather weapons, and fight in real-time to outsmart and defeat your opponent.",
+      thumb:"images/1v1lol.png",
+      url:"games/1v1lol/index.html",
       video:""
     },
     {
@@ -423,7 +425,7 @@
       </div>
     `;
     $('#d-title').textContent = g.name;
-    $('#d-tags').innerHTML = g.tags.map(t=>`<span class="tag">${escapeHTML(t)}</span>`).join('');
+    $('#d-tags').innerHTML = g.tags.map(t=>escapeHTML(t)).join('<span class="sep"> • </span>');
     $('#d-desc').textContent = g.desc;
     startLoadingAndPlay(g);
     const recs = recommend(g, 6).filter(x=>x.id!==g.id);
