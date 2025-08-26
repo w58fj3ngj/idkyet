@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Playgrid — HTML5 Games</title>
   <meta name="color-scheme" content="dark light" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     :root{
       --bg:#0b0c0f;
@@ -154,15 +155,21 @@
     .info{padding:14px 16px}
     .h1{font-size:22px; font-weight:800; margin:2px 0 6px}
     .sub{color:var(--muted); font-size:13px}
-    .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btnrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px}
     .btn{
       padding:9px 14px; border-radius:12px; border:1px solid var(--border);
       background:linear-gradient(180deg,#0f1320,#0d1119); color:var(--text);
       font-weight:600; cursor:pointer; transition:transform .12s ease, border-color .2s;
     }
     .btn:hover{transform:translateY(-1px); border-color:#2b3448}
-    .danger{border-color:#3b1012; background:linear-gradient(180deg,#1b0b0c,#12090a); color:#ffbdbd}
-    .accent{border-color:#1a2442; background:linear-gradient(180deg,#10162a,#0d1222); color:#c9d9ff}
+    .icon-row{display:flex; gap:8px; margin-left:6px}
+    .icon-btn{
+      display:inline-grid; place-items:center; width:40px; height:40px; border-radius:10px; border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1320,#0d1119); cursor:pointer; color:var(--text);
+      transition:transform .12s ease, border-color .12s;
+    }
+    .icon-btn:hover{transform:translateY(-2px); border-color:#2b3448}
+    .material-icons{font-size:20px; line-height:1}
     .desc{margin-top:14px; color:#c7d0e0}
     .side{display:flex; flex-direction:column; gap:12px}
     .rec{display:flex; gap:10px; padding:10px; border:1px solid var(--border); border-radius:12px; background:linear-gradient(180deg,#0e1219,#0c1016); cursor:pointer; transition:transform .12s ease, border-color .2s ease}
@@ -226,11 +233,12 @@
           <div class="player" id="player"></div>
           <div class="info">
             <div class="h1" id="d-title"></div>
-            <div class="sub" id="d-sub"></div>
             <div class="btnrow">
-              <button class="btn accent" id="playBtn">Play</button>
-              <button class="btn" id="favBtn">Add to Playlist</button>
-              <button class="btn danger" id="reportBtn">Report</button>
+              <div class="icon-row">
+                <button class="icon-btn" id="fullscreenBtn" aria-label="Fullscreen"><span class="material-icons">fullscreen</span></button>
+                <button class="icon-btn" id="placeholder1" aria-label="Placeholder 1"><span class="material-icons">share</span></button>
+                <button class="icon-btn" id="placeholder2" aria-label="Placeholder 2"><span class="material-icons">more_vert</span></button>
+              </div>
             </div>
             <div class="tags" id="d-tags" style="margin-top:10px"></div>
             <div class="desc" id="d-desc"></div>
@@ -260,19 +268,19 @@
       name:"Super Mario 64",
       status:"",
       tags:["Platformer","Adventure","3D"],
-      desc:"Mine asteroids, build drones, and optimize routes in space.",
+      desc:"Super Mario 64 is a classic 3D platform game where Mario explores Peach’s castle and various themed worlds to collect Power Stars. Run, jump, and climb through open levels filled with secrets, enemies, and challenges.",
       thumb:"images/supermario64.png",
       url:"games/supermario64/index.html",
       video:""
     },
     {
-      id:"tower-knight",
-      name:"Tower Knight",
+      id:"monkeymart",
+      name:"Monkey Mart",
       status:"",
-      tags:["Strategy","Rogue-lite","Defense"],
-      desc:"Draft gear, defend waves, and climb procedural towers.",
-      thumb:"images/tower.png",
-      url:"about:blank",
+      tags:["Simulation","Idle","Casual"],
+      desc:"Monkey Mart is a casual management game where you play as a monkey running a supermarket. You plant crops, harvest food, stock shelves, and serve customers while expanding your store. As you progress, you can unlock new products, upgrade equipment, and hire helpers to keep the mart running smoothly.",
+      thumb:"images/monkeymart.png",
+      url:"games/monkeymart/index.html",
       video:""
     },
     {
@@ -415,10 +423,8 @@
       </div>
     `;
     $('#d-title').textContent = g.name;
-    $('#d-sub').textContent = `${g.tags.join(' · ')}`;
     $('#d-tags').innerHTML = g.tags.map(t=>`<span class="tag">${escapeHTML(t)}</span>`).join('');
     $('#d-desc').textContent = g.desc;
-    $('#playBtn').onclick = ()=>{ startLoadingAndPlay(g); };
     startLoadingAndPlay(g);
     const recs = recommend(g, 6).filter(x=>x.id!==g.id);
     const recsEl = $('#recs');
@@ -439,6 +445,33 @@
     if(bgVideo){
       bgVideo.play().catch(()=>{});
       bgVideo.addEventListener('error', ()=>{});
+    }
+    const fsBtn = document.getElementById('fullscreenBtn');
+    const ph1 = document.getElementById('placeholder1');
+    const ph2 = document.getElementById('placeholder2');
+    if(fsBtn){
+      fsBtn.onclick = async ()=>{
+        const player = document.getElementById('player');
+        if(!document.fullscreenElement){
+          try{
+            if(player.requestFullscreen) await player.requestFullscreen();
+            else if(player.webkitRequestFullscreen) await player.webkitRequestFullscreen();
+            else if(player.msRequestFullscreen) await player.msRequestFullscreen();
+          }catch(e){}
+        }else{
+          try{
+            if(document.exitFullscreen) await document.exitFullscreen();
+            else if(document.webkitExitFullscreen) await document.webkitExitFullscreen();
+            else if(document.msExitFullscreen) await document.msExitFullscreen();
+          }catch(e){}
+        }
+      };
+    }
+    if(ph1){
+      ph1.onclick = ()=>{ alert('Placeholder 1'); };
+    }
+    if(ph2){
+      ph2.onclick = ()=>{ alert('Placeholder 2'); };
     }
   }
   function startLoadingAndPlay(game){
